@@ -38,15 +38,30 @@ impl XMonitor {
     pub fn primary() -> Result<XMonitor, String> {
         let xrandr=XMonitor::xrandr();
 
-        for line in xrandr.lines() {
-            if line.contains("primary") {
-                let name=line.split(" ").next().unwrap().to_string();
+        let connected_monitors: Vec<String>=xrandr.lines()
+        .filter(|line| line.contains(" connected "))
+        .map(|line| line.to_string())
+        .collect();
 
-                return Ok(XMonitor { name });
+        if connected_monitors.is_empty() {
+            return Err("No connected monitors found".to_string());
+            }
+
+        if connected_monitors.len()>1 {
+            for monitor in &connected_monitors {
+                if monitor.contains("primary") {
+                    let name=monitor.split(' ').next().unwrap().to_string();
+
+                    return Ok(XMonitor { name });
+                    }
                 }
             }
 
-        Err(format!("Primary monitor not found"))
+        // If there is just one connected monitor or multiple without the primary mark, we select the first-one in the list
+
+        let name=connected_monitors[0].split(' ').next().unwrap().to_string();
+
+        Ok(XMonitor { name })
         }
 
     fn turn_on(&self) {
