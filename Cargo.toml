@@ -2,7 +2,7 @@
 name = "mtg"
 description="A utility for toggling the monitor state on Linux"
 license="GPL-3.0-only"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Rastislav Kish <rastislav.kish@protonmail.com>"]
 edition = "2021"
 
