@@ -36,6 +36,12 @@ mtg --help
 
 For more details.
 
+### A note about multimonitor setups
+
+mtg does not properly support multiple monitors at this point. If more than 1 connected devices are detected, the first-one found is chosen as the primary.
+
+User feedback is necessary to asses the practical situations and determine the approach the program should use in similar scenarios.
+
 ## Build
 
 Make sure to have [Rust](https://rust-lang.org) installed. Then just do:
